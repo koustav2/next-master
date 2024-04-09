@@ -10,13 +10,27 @@ export interface User extends Document {
     verifyCodeExpiration: Date;
     createdAt: Date;
     updatedAt: Date;
+    messages: [];
 }
-
 export interface Message extends Document {
     content: string;
     user: User;
     createdAt: Date;
 }
+
+
+const messageSchema: Schema<Message> = new Schema({
+    content: String,
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        required: true,
+    },
+});
 
 const userSchema: Schema<User> = new Schema({
     name: {
@@ -74,20 +88,10 @@ const userSchema: Schema<User> = new Schema({
         type: Date,
         default: Date.now
     },
+    messages: [messageSchema]
 });
 
-const messageSchema: Schema<Message> = new Schema({
-    content: String,
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true,
-    },
-});
 
-export const userModel = mongoose.model<User>("User", userSchema);
-export const messageModel = mongoose.model<Message>("Message", messageSchema);
+
+export const userModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", userSchema);
+export const messageModel = (mongoose.models.Message as mongoose.Model<Message>) || mongoose.model<Message>("Message", messageSchema);
