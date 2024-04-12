@@ -3,13 +3,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
-
+import { useRouter } from 'next/navigation'
 type Props = {}
 const bgImage = {
     background: "url('https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg')"
 };
 
 function SignUp({ }: Props) {
+    const router = useRouter()
     const [isSend, setIsSend] = React.useState<boolean>(false)
     const [isVerified, setIsVerified] = React.useState(false)
     return (
@@ -116,15 +117,24 @@ function SignUp({ }: Props) {
                                     </span>
                                 </button>
                                 <p className="mt-6 text-xs text-gray-600 text-center">
-                                    I agree to abide by templatana's
+                                    I agree to abide by {" "}
                                     <a href="#" className="border-b border-gray-500 border-dotted">
-                                        Terms of Service
+                                        Terms of Service{" "}
                                     </a>
-                                    and its
+                                    and its{" "} 
                                     <a href="#" className="border-b border-gray-500 border-dotted">
                                         Privacy Policy
                                     </a>
                                 </p>
+                            </div>
+                            <div className="my-6  text-center">
+                                Already have an account ? <span>
+                                    <a
+                                        onClick={() => router.push('/signin')}
+                                        className="border-b cursor-pointer text-blue-500 border-gray-500 border-dotted">
+                                        Sign In
+                                    </a>
+                                </span>
                             </div>
                         </div>
                     </div>

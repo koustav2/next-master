@@ -1,10 +1,11 @@
+import SignIn from '@/components/auth/SignIn'
 import React from 'react'
 
 type Props = {}
 
 function page({}: Props) {
   return (
-    <div>page</div>
+    <SignIn/>
   )
 }
 
