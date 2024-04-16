@@ -99,7 +99,7 @@ function SignIn({ }: Props) {
                                 </p>
                             </div>
                             <div className="my-6  text-center">
-                                Create An Account ? <span>
+                                Don't have An Account ? <span>
                                     <a
                                         onClick={() => router.push('/signup')}
                                         className="border-b cursor-pointer text-blue-500 border-gray-500 border-dotted">
