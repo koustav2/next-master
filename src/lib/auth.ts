@@ -39,7 +39,7 @@ export const authOptions: NextAuthOptions = {
                     type: "password",
                     placeholder: "Password",
                 },
-                username: {
+                name: {
                     label: "Username",
                     type: "text",
                     placeholder: "Username",
@@ -48,13 +48,13 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 await connectDB()
                 try {
-                    if (!(credentials?.email || credentials?.username) || !credentials.password) {
+                    if (!(credentials?.email || credentials?.name) || !credentials.password) {
                         return null;
                     }
                     const user = await userModel.findOne<User & { id: string }>({
                         $or: [
                             { email: credentials.email },
-                            { name: credentials.username }
+                            { name: credentials.name }
                         ]
                     }).select("-messages -verifyCode");
                     if (!user) {
@@ -88,17 +88,14 @@ export const authOptions: NextAuthOptions = {
                 ...session,
                 user: {
                     ...dbuser,
-                    id: token.id,
+                    id: token._id,
                 },
             };
         },
         async jwt({ token, user }) {
             if (user) {
-                const u = user as unknown as any;
-                return {
-                    ...token,
-                    id: u.id,
-                };
+                token._id = user._id?.toString()
+                token.isVerified = user.isVerified
             }
             return token;
         },

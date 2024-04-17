@@ -32,12 +32,11 @@ export async function POST(req: Request, res: Response) {
                 name: username,
                 email: email,
                 password: hashedPassword,
-                isVerified: isVerified,
-                verifyCode: verifyCode,
+                // isVerified: isVerified,
+                // verifyCode: verifyCode,
                 verifyCodeExpiration: expiryDate,
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
-                messages: [],
             });
             const savedUser = await newUser.save();
             return Response.json(
@@ -51,7 +50,7 @@ export async function POST(req: Request, res: Response) {
         }
 
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return Response.json(
             {
                 success: false,

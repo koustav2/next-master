@@ -1,11 +1,12 @@
 import { EmailTemplate } from '@/components/auth/Email-template';
 import { resend } from '@/lib/resend';
-import { NextApiRequest, NextApiResponse } from 'next';
 
-
-
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    const { firstName, verificationCode, email } = req.body;
+export async function POST(req: Request, res: Response) {
+    console.log('POST')
+    const { firstName, verificationCode, email } = await req.json();
+    if (!firstName || !verificationCode || !email) {
+        return Response.json({ success: false, message: "Please fill all the fields" }, { status: 400 });
+    }
     try {
         const data = await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
